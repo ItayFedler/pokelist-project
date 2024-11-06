@@ -1,0 +1,38 @@
+
+<!-- Check if pokemonData$ is available -->
+@if (pokemonData$ | async; as pokedata) {
+  <!-- Display the name as a title -->
+  <h1 style="text-align: center;margin-top: 3vh;">{{pokedata.name}}</h1>
+  
+  <!-- Display the types as a horizontal list -->
+  <div style="text-align: center;">
+      <h3>Types:</h3>
+      
+      <ul style="justify-content: center; display: flex; list-style-type: none; padding: 0;">
+          @for (type of pokedata.types; track $index) {
+              <li style="margin-right: 10px;">{{type.type.name}}</li>
+          }
+      </ul>
+  </div>
+  
+  <!-- Display the photo at the bottom, larger size -->
+  <div style="text-align: center;">
+      <!-- <img src="{{pokedata.sprites.front_default}}" alt="{{pokedata.name}}" style="width: 200px; height: 200px;"> -->
+  <!-- for each sprites show image  -->
+    <div style="display: flex; justify-content: center;">
+      <!-- @if (filteredSprites$) { -->
+          <!-- <img src="{{pokedata.sprites.front_default}}" style="width: 200px; height: 200px;"> -->
+
+          @for (item of getNonNullSprites(pokedata.sprites); track $index) {
+            @if (isText(item.img)) {
+              <img src="{{item.img}}" alt="{{item.name}}" style="width: 200px; height: 200px;">
+            }
+          }
+
+    </div>
+   </div>
+}
+@else {
+  <!-- Display loading message if data is not available -->
+  <p style="text-align: center;">Loading...</p>
+}

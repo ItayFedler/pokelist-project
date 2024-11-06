@@ -1,0 +1,54 @@
+<!-- <form> -->
+    <div style="text-align: center; margin-top: 3vh; margin-bottom: 3vh;">
+        <!-- <mat-form-field  appearance="outline" style="margin-right: 1vh;">
+          <mat-label>Filter by name</mat-label>
+          <input matInput #text placeholder="Filter by name"/>
+        </mat-form-field> -->
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>Filter by name</mat-label>
+              <input #text matInput placeholder="" value="">
+            </mat-form-field>
+          </form>
+        <button mat-raised-button color="primary" (click)="filter($event, text.value)" style="margin-right: 1vh;">
+          <mat-icon>filter_list</mat-icon>
+          Filter
+        </button>
+        <button mat-raised-button color="accent" (click)="sort($event)" style="margin-right: 1vh;">
+          <mat-icon>sort</mat-icon>
+          Sort
+        </button>
+        <button mat-raised-button color="warn" (click)="refrashlist($event)">
+          <mat-icon>refresh</mat-icon>
+          Refresh
+        </button>
+      </div>
+    <!-- </form> -->
+
+    <div class="card-container" style="justify-content: center;text-align: center;">
+        <ng-container *ngIf="paginatedPokemonList$; else loading">
+            <ng-container *ngFor="let item of paginatedPokemonList$ | async; let i = index;">
+                <mat-card class="pokemon-card" style="display: inline-block; margin: 5px;">
+                    <mat-card-header>
+                        <mat-card-title>{{item.name}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content style="display: none;">
+                        <p #url>{{item.url}}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-flat-button color="primary" (click)="moredata_route($event,url.innerHTML)">More Data</button>
+                    </mat-card-actions>
+                </mat-card>
+            </ng-container>
+        </ng-container>
+        
+        <ng-template #loading>
+            <p>Loading...</p>
+        </ng-template>
+        
+
+    </div>
+    <div class="footer"> <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)">
+    </mat-paginator></div>
+    <!-- <mat-paginator #paginator [length]="dataSize" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator> -->
